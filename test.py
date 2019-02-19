@@ -1,7 +1,7 @@
 import struct
 
 filename = "TEAM.070"
-fout = open('test.dat', 'wb')
+fout = open(filename + '.new', 'wb')
 
 with open(filename, "r+b") as f:
 
