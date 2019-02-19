@@ -1,5 +1,7 @@
 import struct
 import json
+import raw_file_class as rawFile
+
 def trash():
     with open('partizan.json', 'r') as f:
         data = json.load(f)
@@ -69,27 +71,23 @@ def readDatFile(filename):
     with open(filename, "r+b") as f:
 
             s = f.read(2)
-            
+            raw = rawFile.RawDatFile()
             numberOfTeamsInFile = int.from_bytes(s,byteorder='big')
+            raw.numberOfTeams = numberOfTeamsInFile 
+            clubData = rawFile.RawClubData()
             var = 1
             s=f.read(76)
             
             while ( s != b""):
-                test,test1,test2,test3,clubNameRaw,rubbish,tacticNumber,league,shirtType,shirtColor,rest = struct.unpack("BBHB16s3sBBBB48s", s)
-                clubName = clubNameRaw.decode(encoding="utf-8")
-                #tactic = int.from_bytes(tacticNumber,byteorder='big')
-                print(clubName)
-                clubName = "Partizan"
-                print(clubName)
-                print(league)
-                b = clubName.encode('utf-8')
-                print(b)
+                test,test1,test2,test3,clubNameRaw,rubbish,tacticNumber,league,shirtType,shirtColor,rubbish3,coachName ,rest = struct.unpack("BBHB16s3sBBBB8s22s18s", s)
+            
                 
-                #print(shirtType)
-                #print(shirtColor)
+                clubData.name = clubNameRaw 
+                clubData.coach = coachName
+                
                 for x in range(0, 16):
                     s=f.read(38)
-
+                    playerData = clubData.RawPlayerData()
                     nationIndex,rubbish2,shirtNumber,playerNameRaw,rest2 = struct.unpack("BBB22s13s", s)
                     
                     playerName = playerNameRaw.decode(encoding="utf-8")
@@ -97,10 +95,11 @@ def readDatFile(filename):
                     print(playerName)
                     #print ('player Number {} '.format(x+1))
                     #print(playerName)
+                rawFile.RawDatFile().add_club_data(clubData)
                 s=f.read(76)
               
 
 
-data = read_json_file("partizan.json")   
-editDatFile("TEAM.070" , data)
-#readDatFile("TEAM.070")
+#data = read_json_file("partizan.json")   
+#editDatFile("TEAM.070" , data)
+readDatFile("TEAM.070")
