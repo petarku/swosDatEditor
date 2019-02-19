@@ -8,8 +8,8 @@ class RawClubData:
     coach = bytes(22) 
     rawPlayerData = []
 
-    def add_players(self):
-        self.rawPlayerData.append(RawPlayerData())
+    def add_players(self, RawPlayerData):
+        self.rawPlayerData.append(RawPlayerData)
 
 class RawDatFile:
     rawClubData = [] 

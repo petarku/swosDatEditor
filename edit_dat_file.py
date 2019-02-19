@@ -87,12 +87,13 @@ def readDatFile(filename):
                 
                 for x in range(0, 16):
                     s=f.read(38)
-                    playerData = clubData.RawPlayerData()
+                    playerData = rawFile.RawPlayerData()
                     nationIndex,rubbish2,shirtNumber,playerNameRaw,rest2 = struct.unpack("BBB22s13s", s)
                     
                     playerName = playerNameRaw.decode(encoding="utf-8")
                     
                     print(playerName)
+                    clubData.add_players(playerData)
                     #print ('player Number {} '.format(x+1))
                     #print(playerName)
                 rawFile.RawDatFile().add_club_data(clubData)
