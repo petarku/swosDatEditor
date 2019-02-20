@@ -1,6 +1,7 @@
 import struct
 import json
 import raw_file_class as rawFile
+import swos_model as model
 
 def trash():
     with open('partizan.json', 'r') as f:
@@ -147,6 +148,9 @@ def writeDatFile(filename, RawDatFile):
 #data = read_json_file("partizan.json")   
 #editDatFile("TEAM.070" , data)
 fileRaw1 = readDatFile("TEAM.070")
+club = model.Club()
+club.convertRawToClub(fileRaw1.rawClubData[0])
+club.print()
 '''print(fileRaw1.numberOfTeams)
 print(fileRaw1.rawClubData[0].name)
 print(fileRaw1.rawClubData[0].tuple)
